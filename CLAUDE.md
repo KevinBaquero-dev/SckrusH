@@ -12,10 +12,8 @@
 ## Flujo de trabajo
 
 ```
-Usuario (logística) → Gemini (prompt engineer) → Claude Code (desarrollo)
+Usuario → Claude Code (desarrollo directo)
 ```
-
-Gemini recibe instrucciones del usuario en lenguaje natural, las reescribe como prompts técnicos precisos y los pasa a Claude. El archivo `GEMINI_PROMPT_GUIDE.md` en la raíz define cómo debe operar Gemini.
 
 ## Stack del proyecto
 
