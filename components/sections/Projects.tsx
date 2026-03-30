@@ -52,61 +52,69 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
         animate={{ y: 0 }}
         exit={{ y: '100%' }}
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] as const }}
-        onClick={e => { e.stopPropagation(); setTextVisible(v => !v) }}
+        onClick={e => e.stopPropagation()}
         className="relative w-full rounded-t-[var(--radius-lg)] overflow-hidden md:hidden"
+        style={{ maxHeight: '82vh' }}
       >
-        {/* Image — contain so no zoom, dark bg hides letterbox bars */}
-        <div className="relative w-full aspect-[4/3] bg-[var(--surface-2)]">
-          {project.image ? (
-            <Image
-              src={project.image}
-              alt={project.name}
-              fill
-              sizes="100vw"
-              className="object-contain object-center"
-            />
-          ) : (
-            <div
-              className="absolute inset-0"
-              style={{ background: `linear-gradient(135deg, var(--surface-2) 0%, ${project.accent}18 100%)` }}
-            />
-          )}
-
-          {/* Text overlay — fadeable */}
-          <AnimatePresence>
-            {textVisible && (
-              <motion.div
-                key="mobile-text"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.25 }}
+        {/* Scrollable image — fills more than the panel so there's room to scroll */}
+        <div
+          className="overflow-y-auto overscroll-contain"
+          style={{ maxHeight: '82vh' }}
+          onClick={() => setTextVisible(v => !v)}
+        >
+          <div className="relative w-full" style={{ height: '100svh' }}>
+            {project.image ? (
+              <Image
+                src={project.image}
+                alt={project.name}
+                fill
+                sizes="100vw"
+                className="object-cover"
+                style={{ objectPosition: 'center 12%' }}
+              />
+            ) : (
+              <div
                 className="absolute inset-0"
-              >
-                <div
-                  className="absolute inset-0"
-                  style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.55) 40%, transparent 70%)' }}
-                />
-                <div className="absolute bottom-0 left-0 right-0 px-5 pb-5 flex flex-col gap-2">
-                  <p className="font-mono text-xs text-white/40">{'> proyecto'}</p>
-                  <h2 className="font-mono text-2xl tracking-tight leading-none text-white">{project.name}</h2>
-                  <p className="font-sans text-sm leading-relaxed text-white/70">{project.description}</p>
-                  <div className="flex flex-wrap gap-1.5 pt-1">
-                    {project.stack.map(tech => (
-                      <span
-                        key={tech}
-                        className="font-mono text-xs px-2.5 py-1 rounded-[var(--radius-sm)]"
-                        style={{ border: '1px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.65)' }}
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
+                style={{ background: `linear-gradient(135deg, var(--surface-2) 0%, ${project.accent}18 100%)` }}
+              />
             )}
-          </AnimatePresence>
+          </div>
         </div>
+
+        {/* Text — sits outside scroll, always visible at bottom */}
+        <AnimatePresence>
+          {textVisible && (
+            <motion.div
+              key="mobile-text"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="absolute bottom-0 left-0 right-0 pointer-events-none"
+            >
+              <div
+                className="absolute inset-0"
+                style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.93) 0%, rgba(0,0,0,0.60) 40%, transparent 100%)' }}
+              />
+              <div className="relative px-5 pb-6 pt-16 flex flex-col gap-2">
+                <p className="font-mono text-xs text-white/40">{'> proyecto'}</p>
+                <h2 className="font-mono text-2xl tracking-tight leading-none text-white">{project.name}</h2>
+                <p className="font-sans text-sm leading-relaxed text-white/70">{project.description}</p>
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  {project.stack.map(tech => (
+                    <span
+                      key={tech}
+                      className="font-mono text-xs px-2.5 py-1 rounded-[var(--radius-sm)]"
+                      style={{ border: '1px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.65)' }}
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Close button */}
         <button
@@ -344,23 +352,17 @@ function ProjectRow({
 export default function Projects() {
   const [selected, setSelected] = useState<Project | null>(null)
 
-  // ESC to close + body scroll lock (iOS-compatible)
+  // ESC to close + scroll lock (no position:fixed to avoid jump)
   useEffect(() => {
     if (!selected) return
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setSelected(null) }
     document.addEventListener('keydown', onKey)
-    const scrollY = window.scrollY
-    document.body.style.overflow = 'hidden'
-    document.body.style.position = 'fixed'
-    document.body.style.top = `-${scrollY}px`
-    document.body.style.width = '100%'
+    document.documentElement.style.overflowY = 'hidden'
+    document.body.style.overflowY = 'hidden'
     return () => {
       document.removeEventListener('keydown', onKey)
-      document.body.style.overflow = ''
-      document.body.style.position = ''
-      document.body.style.top = ''
-      document.body.style.width = ''
-      window.scrollTo(0, scrollY)
+      document.documentElement.style.overflowY = ''
+      document.body.style.overflowY = ''
     }
   }, [selected])
 
