@@ -35,7 +35,7 @@ export const projects: Project[] = [
   {
     id:          "mivida",
     name:        "MiVida",
-    description: "PWA de gestión de vida personal. Tareas en Kanban, hábitos, finanzas, calendario y Pomodoro — multi-usuario, personalizable e instalable en móvil.",
+    description: "PWA de gestión personal: Kanban, hábitos, finanzas, calendario y Pomodoro. Multi-usuario e instalable en móvil.",
     stack:       ["React", "Supabase", "Framer Motion", "PWA", "PostgreSQL"],
     url:         "https://mi-vida-7zqa.vercel.app/",
     repo:        "https://github.com/KevinBaquero-dev/MiVida",
@@ -55,7 +55,7 @@ export const projects: Project[] = [
   {
     id:          "edugestion",
     name:        "EduGestión",
-    description: "Plataforma para colegios que automatiza la generación de boletines. Profesores ingresan notas por materia, el sistema calcula promedios, rankings de salón y observaciones — listo al cierre de cada periodo.",
+    description: "Plataforma para colegios que automatiza boletines. Profesores ingresan notas, el sistema calcula promedios y rankings al cierre de cada periodo.",
     stack:       ["Next.js", "TypeScript", "Supabase", "Prisma", "@react-pdf/renderer"],
     image:       "/edugestion.png",
     accent:      "#FB923C",
