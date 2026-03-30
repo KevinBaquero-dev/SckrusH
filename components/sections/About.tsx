@@ -13,9 +13,9 @@ const STRENGTHS = [
 ]
 
 const STATS = [
-  { value: '12',          label: 'proyectos llevados\na producción', accent: true  },
-  { value: 'Full Stack',  label: 'frontend · backend\n· DevOps',     accent: false },
-  { value: 'Open Source', label: 'contribuidor\nactivo',              accent: false },
+  { value: '6',              label: 'proyectos llevados\na producción',              accent: true  },
+  { value: 'Full Stack',     label: 'frontend · backend\n· DevOps',                 accent: false },
+  { value: 'Idea Developer', label: 'Software a medida según\ntus necesidades',     accent: false },
 ]
 
 // ─── Terminal window data ─────────────────────────────────────────────────────
@@ -32,11 +32,11 @@ const TERMINAL_LINES: TLine[] = [
   { type: 'out', text: 'Full Stack Developer · Bogotá, CO' },
   { type: 'gap' },
   { type: 'cmd', text: 'uptime' },
-  { type: 'out', text: '5+ años construyendo productos' },
+  { type: 'out', text: 'Gerente de CobraIA SaaS' },
   { type: 'gap' },
   { type: 'cmd', text: 'cat motto.txt' },
-  { type: 'out', text: 'No escribo código.' },
-  { type: 'out', text: 'Diseño la experiencia.' },
+  { type: 'out', text: 'Solución a verdaderos problemas.' },
+  { type: 'out', text: 'Ahorra tiempo con Software.' },
   { type: 'gap' },
   { type: 'cursor' },
 ]

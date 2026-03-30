@@ -8,8 +8,8 @@ import { useTypewriter } from '@/hooks/useTypewriter'
 const TITLE = '> SckrusH'
 
 const TAGLINES = [
-  'No escribo código.',
-  'Diseño la experiencia.',
+  'Solución a verdaderos problemas.',
+  'Ahorra tiempo con Software.',
 ]
 
 const taglineVariants = {

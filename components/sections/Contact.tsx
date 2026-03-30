@@ -55,11 +55,14 @@ function SocialLink({ href, label }: { href: string; label: string }) {
 // ─── Section ──────────────────────────────────────────────────────────────────
 
 export default function Contact() {
-  const { email, github, linkedin } = siteConfig.socials
+  const { email, github, whatsapp, instagram, facebook, tiktok } = siteConfig.socials
 
   const socialLinks = [
-    { href: github,   label: 'GitHub'   },
-    { href: linkedin, label: 'LinkedIn' },
+    { href: whatsapp,  label: 'WhatsApp'  },
+    { href: instagram, label: 'Instagram' },
+    { href: facebook,  label: 'Facebook'  },
+    { href: tiktok,    label: 'TikTok'    },
+    { href: github,    label: 'GitHub'    },
   ].filter(s => s.href)
 
   return (
