@@ -147,7 +147,7 @@ export default function FeaturedProject() {
                   alt={`Mockup de ${featured.name}`}
                   fill
                   sizes="(max-width: 1024px) 100vw, 55vw"
-                  className="object-cover"
+                  className="object-cover object-top"
                 />
               </div>
             ) : (
