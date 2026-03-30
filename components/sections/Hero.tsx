@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import Container from '@/components/layout/Container'
 import { useTypewriter } from '@/hooks/useTypewriter'
@@ -24,7 +24,45 @@ const taglineVariants = {
   }),
 }
 
+const MAX_GLOW_TRAVEL = 11 // px
+
 export default function Hero() {
+  const sectionRef = useRef<HTMLElement>(null)
+
+  // Mouse-tracked glow — rAF throttled, no React state updates
+  useEffect(() => {
+    const section = sectionRef.current
+    if (!section) return
+
+    let rafId: number | null = null
+
+    const onMove = (e: MouseEvent) => {
+      if (rafId !== null) return
+      rafId = requestAnimationFrame(() => {
+        const rect = section.getBoundingClientRect()
+        const cx = (e.clientX - rect.left  - rect.width  / 2) / rect.width
+        const cy = (e.clientY - rect.top   - rect.height / 2) / rect.height
+        section.style.setProperty('--gx', `${cx * MAX_GLOW_TRAVEL}px`)
+        section.style.setProperty('--gy', `${cy * MAX_GLOW_TRAVEL}px`)
+        rafId = null
+      })
+    }
+
+    const onLeave = () => {
+      if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null }
+      section.style.setProperty('--gx', '0px')
+      section.style.setProperty('--gy', '0px')
+    }
+
+    section.addEventListener('mousemove', onMove, { passive: true })
+    section.addEventListener('mouseleave', onLeave)
+    return () => {
+      section.removeEventListener('mousemove', onMove)
+      section.removeEventListener('mouseleave', onLeave)
+      if (rafId !== null) cancelAnimationFrame(rafId)
+    }
+  }, [])
+
   const { displayed, done: typingDone } = useTypewriter({
     text: TITLE,
     speed: 75,
@@ -42,16 +80,17 @@ export default function Hero() {
 
   return (
     <section
+      ref={sectionRef}
       id="hero"
       className="relative min-h-dvh flex items-center overflow-hidden"
     >
-      {/* Subtle accent glow from top */}
+      {/* Accent glow — follows mouse via CSS custom properties */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse 90% 55% at 50% -5%, rgba(232,255,71,0.055) 0%, transparent 65%)',
+            'radial-gradient(ellipse 90% 55% at calc(50% + var(--gx, 0px)) calc(-5% + var(--gy, 0px)), rgba(232,255,71,0.055) 0%, transparent 65%)',
         }}
       />
 
