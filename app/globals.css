@@ -134,6 +134,18 @@
   50%       { opacity: 0; }
 }
 
+@keyframes orb-drift-1 {
+  0%, 100% { transform: translate(0,    0);       }
+  33%      { transform: translate(-70px, 55px);   }
+  66%      { transform: translate(45px, -65px);   }
+}
+
+@keyframes orb-drift-2 {
+  0%, 100% { transform: translate(0,    0);       }
+  33%      { transform: translate(75px, -45px);   }
+  66%      { transform: translate(-50px, 70px);   }
+}
+
 /* ─── Utility classes ────────────────────────────────────────── */
 @layer utilities {
   .container-main {

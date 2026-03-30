@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Container from '@/components/layout/Container'
+import { siteConfig } from '@/config/site'
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
@@ -17,27 +18,28 @@ const STATS = [
   { value: 'Open Source', label: 'contribuidor\nactivo',              accent: false },
 ]
 
-// 8 rows × 12 cols — predefined activity levels (0–5)
-// 5 = outlier bright cell, used sparingly to break uniformity
-const GRID_DATA: number[][] = [
-  [0, 1, 2, 1, 3, 2, 4, 3, 2, 1, 0, 1],
-  [1, 2, 1, 3, 2, 4, 5, 4, 3, 2, 1, 0],
-  [0, 1, 3, 2, 4, 3, 2, 4, 2, 3, 2, 1],
-  [2, 1, 2, 4, 3, 2, 4, 3, 4, 2, 1, 2],
-  [1, 2, 1, 3, 4, 3, 3, 2, 5, 4, 2, 1],
-  [0, 1, 2, 2, 3, 5, 2, 3, 2, 3, 3, 2],
-  [1, 0, 1, 1, 2, 3, 1, 2, 3, 2, 1, 1],
-  [0, 1, 0, 2, 1, 2, 0, 1, 2, 1, 0, 0],
-]
+// ─── Terminal window data ─────────────────────────────────────────────────────
 
-const OPACITY_MAP: Record<number, string> = {
-  0: 'rgba(255,255,255,0.04)',
-  1: 'rgba(232,255,71,0.10)',
-  2: 'rgba(232,255,71,0.22)',
-  3: 'rgba(232,255,71,0.40)',
-  4: 'rgba(232,255,71,0.60)',
-  5: 'rgba(232,255,71,0.88)',
-}
+type TLine =
+  | { type: 'cmd';    text: string }
+  | { type: 'out';    text: string }
+  | { type: 'gap' }
+  | { type: 'cursor' }
+
+const TERMINAL_LINES: TLine[] = [
+  { type: 'cmd', text: 'whoami' },
+  { type: 'out', text: `${siteConfig.name} (${siteConfig.alias})` },
+  { type: 'out', text: 'Full Stack Developer · Bogotá, CO' },
+  { type: 'gap' },
+  { type: 'cmd', text: 'uptime' },
+  { type: 'out', text: '5+ años construyendo productos' },
+  { type: 'gap' },
+  { type: 'cmd', text: 'cat motto.txt' },
+  { type: 'out', text: 'No escribo código.' },
+  { type: 'out', text: 'Diseño la experiencia.' },
+  { type: 'gap' },
+  { type: 'cursor' },
+]
 
 // ─── Animation variants ───────────────────────────────────────────────────────
 
@@ -56,42 +58,81 @@ const itemVariants = {
   visible:  { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' as const } },
 }
 
-// Each grid column fades in left → right
-const gridColVariants = {
-  hidden:   { opacity: 0 },
-  visible:  (col: number) => ({
+const terminalLineVariants = {
+  hidden:  { opacity: 0, y: 6 },
+  visible: (i: number) => ({
     opacity: 1,
-    transition: { duration: 0.35, delay: col * 0.04, ease: 'easeOut' as const },
+    y: 0,
+    transition: { duration: 0.3, delay: i * 0.07, ease: 'easeOut' as const },
   }),
 }
 
-// ─── Activity grid (right column visual) ─────────────────────────────────────
+// ─── Terminal window ──────────────────────────────────────────────────────────
 
-function ActivityGrid() {
+function TerminalWindow() {
   return (
     <motion.div
-      className="flex gap-[3px]"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
       variants={{ hidden: {}, visible: {} }}
+      className="w-full rounded-[var(--radius-md)] overflow-hidden border border-[var(--border)]"
+      style={{ background: 'var(--surface-2)' }}
     >
-      {GRID_DATA[0].map((_, col) => (
-        <motion.div
-          key={col}
-          custom={col}
-          variants={gridColVariants}
-          className="flex flex-col gap-[3px]"
-        >
-          {GRID_DATA.map((row, rowIdx) => (
-            <div
-              key={rowIdx}
-              className="w-[7px] h-[7px] rounded-[1px]"
-              style={{ backgroundColor: OPACITY_MAP[row[col]] }}
-            />
-          ))}
-        </motion.div>
-      ))}
+      {/* Title bar */}
+      <div
+        className="flex items-center gap-2 px-4 py-3 border-b border-[var(--border)]"
+        style={{ background: 'rgba(255,255,255,0.02)' }}
+      >
+        <span className="w-2.5 h-2.5 rounded-full bg-[#FF5F57]" />
+        <span className="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]" />
+        <span className="w-2.5 h-2.5 rounded-full bg-[#28C840]" />
+        <span className="font-mono text-xs text-[var(--text-muted)] ml-2 select-none">
+          bash
+        </span>
+      </div>
+
+      {/* Content */}
+      <div className="px-5 py-5 space-y-1.5">
+        {TERMINAL_LINES.map((line, i) => {
+          if (line.type === 'gap') {
+            return <div key={i} className="h-2" />
+          }
+          if (line.type === 'cursor') {
+            return (
+              <motion.div
+                key={i}
+                custom={i}
+                variants={terminalLineVariants}
+                className="flex items-center gap-2 font-mono text-sm"
+              >
+                <span className="text-[var(--accent)] select-none">$</span>
+                <span
+                  className="inline-block w-[9px] h-[15px] bg-[var(--accent)]"
+                  style={{ animation: 'blink 1.1s step-end infinite' }}
+                />
+              </motion.div>
+            )
+          }
+          return (
+            <motion.p
+              key={i}
+              custom={i}
+              variants={terminalLineVariants}
+              className={`font-mono text-sm leading-relaxed ${
+                line.type === 'cmd'
+                  ? 'text-[var(--text-primary)]'
+                  : 'text-[var(--text-secondary)] pl-5'
+              }`}
+            >
+              {line.type === 'cmd' && (
+                <span className="text-[var(--accent)] mr-2 select-none">$</span>
+              )}
+              {line.text}
+            </motion.p>
+          )
+        })}
+      </div>
     </motion.div>
   )
 }
@@ -172,9 +213,9 @@ export default function About() {
             </motion.div>
           </motion.div>
 
-          {/* Right column: activity grid — desktop only */}
-          <div className="hidden lg:flex items-center justify-end">
-            <ActivityGrid />
+          {/* Right column: terminal window */}
+          <div className="hidden lg:flex items-center">
+            <TerminalWindow />
           </div>
         </motion.div>
       </Container>
