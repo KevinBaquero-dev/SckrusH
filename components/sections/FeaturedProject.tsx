@@ -97,10 +97,17 @@ export default function FeaturedProject() {
                 href={featured.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative font-mono text-sm text-[var(--text-primary)]"
+                className="group inline-flex items-center gap-2 font-mono text-sm px-5 py-2.5 rounded-[var(--radius-sm)] transition-all duration-200"
+                style={{
+                  background:  'var(--accent)',
+                  color:       '#080808',
+                  boxShadow:   '0 0 18px rgba(232,255,71,0.25)',
+                }}
+                onMouseEnter={e => (e.currentTarget.style.boxShadow = '0 0 28px rgba(232,255,71,0.45)')}
+                onMouseLeave={e => (e.currentTarget.style.boxShadow = '0 0 18px rgba(232,255,71,0.25)')}
               >
-                ver proyecto →
-                <span className="absolute -bottom-px left-0 h-px w-0 bg-[var(--accent)] transition-[width] duration-300 ease-out group-hover:w-full" />
+                Probar proyecto
+                <span className="transition-transform duration-200 group-hover:translate-x-0.5">→</span>
               </a>
             )}
             {featured.repo && (
