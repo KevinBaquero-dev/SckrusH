@@ -52,6 +52,12 @@ export default function Navbar() {
 
   return (
     <>
+      {/* Safe-area cover — always opaque, sits above everything */}
+      <div
+        className="fixed inset-x-0 top-0 z-50"
+        style={{ height: 'env(safe-area-inset-top)', backgroundColor: 'rgba(8,8,8,1)' }}
+      />
+
       <header
         className="fixed inset-x-0 top-0 z-50 transition-[background-color,backdrop-filter] duration-300"
         style={{
