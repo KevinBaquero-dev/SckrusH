@@ -40,91 +40,135 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
-      className="fixed inset-0 z-[9000] md:flex md:items-center md:justify-center md:p-10"
+      className="fixed inset-0 z-[9000] flex items-end md:items-center md:justify-center md:p-10"
       onClick={onClose}
     >
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/75 backdrop-blur-sm" />
 
-      {/* Panel — full-screen on mobile, 16/9 centered on desktop */}
+      {/* ── Mobile: bottom-sheet ─────────────────────────────────── */}
+      <motion.div
+        initial={{ y: '100%' }}
+        animate={{ y: 0 }}
+        exit={{ y: '100%' }}
+        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] as const }}
+        onClick={e => { e.stopPropagation(); setTextVisible(v => !v) }}
+        className="relative w-full rounded-t-[var(--radius-lg)] overflow-hidden md:hidden"
+      >
+        {/* Image at natural aspect ratio */}
+        <div className="relative w-full aspect-[4/3]">
+          {project.image ? (
+            <Image
+              src={project.image}
+              alt={project.name}
+              fill
+              sizes="100vw"
+              className="object-cover object-top"
+            />
+          ) : (
+            <div
+              className="absolute inset-0"
+              style={{ background: `linear-gradient(135deg, var(--surface-2) 0%, ${project.accent}18 100%)` }}
+            />
+          )}
+
+          {/* Text overlay — fadeable */}
+          <AnimatePresence>
+            {textVisible && (
+              <motion.div
+                key="mobile-text"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="absolute inset-0"
+              >
+                <div
+                  className="absolute inset-0"
+                  style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.55) 40%, transparent 70%)' }}
+                />
+                <div className="absolute bottom-0 left-0 right-0 px-5 pb-5 flex flex-col gap-2">
+                  <p className="font-mono text-xs text-white/40">{'> proyecto'}</p>
+                  <h2 className="font-mono text-2xl tracking-tight leading-none text-white">{project.name}</h2>
+                  <p className="font-sans text-sm leading-relaxed text-white/70">{project.description}</p>
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {project.stack.map(tech => (
+                      <span
+                        key={tech}
+                        className="font-mono text-xs px-2.5 py-1 rounded-[var(--radius-sm)]"
+                        style={{ border: '1px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.65)' }}
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Close button */}
+        <button
+          onClick={e => { e.stopPropagation(); onClose() }}
+          aria-label="Cerrar"
+          className="absolute top-3 right-3 font-mono text-sm text-white/40 hover:text-white transition-colors duration-200 w-8 h-8 flex items-center justify-center z-10"
+        >
+          ✕
+        </button>
+      </motion.div>
+
+      {/* ── Desktop: centered 16/9 panel ────────────────────────── */}
       <motion.div
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.96 }}
         transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] as const }}
         onClick={e => { e.stopPropagation(); setTextVisible(v => !v) }}
-        className="absolute inset-0 md:relative md:inset-auto md:w-full md:max-w-5xl md:aspect-[16/9] md:rounded-[var(--radius-lg)] overflow-hidden"
+        className="relative hidden md:block w-full max-w-5xl aspect-[16/9] rounded-[var(--radius-lg)] overflow-hidden"
       >
-
-        {/* Image */}
         {project.image ? (
           <Image
             src={project.image}
             alt={project.name}
             fill
-            sizes="(max-width: 768px) 100vw, 90vw"
-            className="object-contain object-center md:object-cover md:object-top"
+            sizes="90vw"
+            className="object-cover object-top"
           />
         ) : (
           <div
             className="absolute inset-0"
-            style={{
-              background: `linear-gradient(135deg, var(--surface-2) 0%, ${project.accent}18 100%)`,
-            }}
+            style={{ background: `linear-gradient(135deg, var(--surface-2) 0%, ${project.accent}18 100%)` }}
           />
         )}
 
-        {/* Overlay + content — animated */}
         <AnimatePresence>
           {textVisible && (
             <motion.div
-              key="text-overlay"
+              key="desktop-text"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
               className="absolute inset-0"
             >
-              {/* Gradient bottom→top on mobile, left→right on desktop */}
               <div
-                className="absolute inset-0 md:hidden"
-                style={{
-                  background: 'linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.65) 40%, rgba(0,0,0,0.15) 65%, transparent 85%)',
-                }}
+                className="absolute inset-0"
+                style={{ background: 'linear-gradient(to right, rgba(0,0,0,0.93) 0%, rgba(0,0,0,0.80) 28%, rgba(0,0,0,0.35) 55%, transparent 78%)' }}
               />
-              <div
-                className="absolute inset-0 hidden md:block"
-                style={{
-                  background: 'linear-gradient(to right, rgba(0,0,0,0.93) 0%, rgba(0,0,0,0.80) 28%, rgba(0,0,0,0.35) 55%, transparent 78%)',
-                }}
-              />
-
-              {/* Content: bottom on mobile, left-center on desktop */}
-              <div className="absolute inset-0 flex items-end md:items-center">
-                <div className="w-full md:w-[52%] px-6 md:px-12 pb-12 md:py-8 flex flex-col gap-3 md:gap-4">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-[52%] px-12 py-8 flex flex-col gap-4">
                   <p className="font-mono text-xs text-white/40">{'> proyecto'}</p>
-
-                  <h2
-                    className="font-mono tracking-tight leading-none text-white"
-                    style={{ fontSize: 'clamp(1.6rem, 5vw, 3rem)' }}
-                  >
+                  <h2 className="font-mono tracking-tight leading-none text-white" style={{ fontSize: 'clamp(1.8rem, 3.5vw, 3rem)' }}>
                     {project.name}
                   </h2>
-
-                  <p className="font-sans text-sm leading-relaxed text-white/70">
-                    {project.description}
-                  </p>
-
+                  <p className="font-sans text-sm leading-relaxed text-white/70 max-w-[38ch]">{project.description}</p>
                   <div className="flex flex-wrap gap-1.5">
                     {project.stack.map(tech => (
                       <span
                         key={tech}
                         className="font-mono text-xs px-2.5 py-1 rounded-[var(--radius-sm)]"
-                        style={{
-                          border: '1px solid rgba(255,255,255,0.15)',
-                          background: 'rgba(255,255,255,0.07)',
-                          color: 'rgba(255,255,255,0.65)',
-                        }}
+                        style={{ border: '1px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.65)' }}
                       >
                         {tech}
                       </span>
@@ -136,7 +180,6 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
           )}
         </AnimatePresence>
 
-        {/* Close button */}
         <button
           onClick={e => { e.stopPropagation(); onClose() }}
           aria-label="Cerrar"
