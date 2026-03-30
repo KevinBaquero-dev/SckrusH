@@ -1,0 +1,21 @@
+{
+  "name": "Kevin Baquero (SckrusH)",
+  "short_name": "SckrusH",
+  "description": "Solución a verdaderos problemas. Ahorra tiempo con Software.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080808",
+  "theme_color": "#080808",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
