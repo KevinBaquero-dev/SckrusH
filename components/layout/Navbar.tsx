@@ -55,7 +55,7 @@ export default function Navbar() {
       <header
         className="fixed inset-x-0 top-0 z-50 transition-[background-color,backdrop-filter] duration-300"
         style={{
-          backgroundColor: scrolled || menuOpen ? 'rgba(8,8,8,0.95)' : 'transparent',
+          backgroundColor: 'rgba(8,8,8,0.95)',
           backdropFilter:   scrolled || menuOpen ? 'blur(4px)' : 'none',
           paddingTop: 'env(safe-area-inset-top)',
         }}
