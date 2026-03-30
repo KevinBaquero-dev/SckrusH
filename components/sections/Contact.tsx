@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Container from '@/components/layout/Container'
+import Magnetic from '@/components/ui/Magnetic'
 import { siteConfig } from '@/config/site'
 
 // ─── Animation variants ───────────────────────────────────────────────────────
@@ -9,6 +10,15 @@ import { siteConfig } from '@/config/site'
 const itemVariants = {
   hidden:  { opacity: 0, y: 16 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: 'easeOut' as const } },
+}
+
+// Clip-up reveal — text emerges from behind a mask
+const clipLineVariants = {
+  hidden:  { y: '105%' },
+  visible: (delay: number) => ({
+    y: '0%',
+    transition: { duration: 0.82, ease: [0.16, 1, 0.3, 1] as const, delay },
+  }),
 }
 
 const fadeVariants = {
@@ -69,31 +79,39 @@ export default function Contact() {
             {'> contacto'}
           </motion.p>
 
-          {/* Heading — two lines, intentional break */}
+          {/* Heading — two lines, clip-up reveal */}
           <div className="max-w-2xl mb-10">
-            <motion.h2
-              variants={itemVariants}
-              className="font-mono text-[clamp(2rem,5vw,3.75rem)] tracking-tight leading-[1.1] text-[var(--text-primary)]"
-            >
-              ¿Tienes un proyecto
-            </motion.h2>
-            <motion.h2
-              variants={itemVariants}
-              className="font-mono text-[clamp(2rem,5vw,3.75rem)] tracking-tight leading-[1.1] text-[var(--text-primary)]"
-            >
-              que vale la pena construir?
-            </motion.h2>
+            <div className="overflow-hidden">
+              <motion.h2
+                variants={clipLineVariants}
+                custom={0.04}
+                className="font-mono text-[clamp(2rem,5vw,3.75rem)] tracking-tight leading-[1.1] text-[var(--text-primary)]"
+              >
+                ¿Tienes un proyecto
+              </motion.h2>
+            </div>
+            <div className="overflow-hidden">
+              <motion.h2
+                variants={clipLineVariants}
+                custom={0.14}
+                className="font-mono text-[clamp(2rem,5vw,3.75rem)] tracking-tight leading-[1.1] text-[var(--text-primary)]"
+              >
+                que vale la pena construir?
+              </motion.h2>
+            </div>
           </div>
 
           {/* CTA — email */}
           <motion.div variants={fadeVariants} className="mb-16">
-            <a
-              href={email}
-              className="group relative inline-block font-mono text-base text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200"
-            >
-              {email.replace('mailto:', '')}
-              <span className="absolute -bottom-px left-0 h-px w-0 bg-[var(--accent)] transition-[width] duration-300 ease-out group-hover:w-full" />
-            </a>
+            <Magnetic>
+              <a
+                href={email}
+                className="group relative inline-block font-mono text-base text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200"
+              >
+                {email.replace('mailto:', '')}
+                <span className="absolute -bottom-px left-0 h-px w-0 bg-[var(--accent)] transition-[width] duration-300 ease-out group-hover:w-full" />
+              </a>
+            </Magnetic>
           </motion.div>
 
           {/* Separator */}

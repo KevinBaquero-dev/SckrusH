@@ -19,6 +19,11 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' as const } },
 }
 
+const clipTitleVariants = {
+  hidden:  { y: '105%' },
+  visible: { y: '0%', transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] as const } },
+}
+
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function FeaturedProject() {
@@ -56,12 +61,14 @@ export default function FeaturedProject() {
           </motion.p>
 
           {/* Project name */}
-          <motion.h2
-            variants={itemVariants}
-            className="font-mono text-[clamp(2.5rem,4.5vw,4.5rem)] tracking-tight leading-none text-[var(--text-primary)] mb-6"
-          >
-            {featured.name}
-          </motion.h2>
+          <div className="overflow-hidden mb-6">
+            <motion.h2
+              variants={clipTitleVariants}
+              className="font-mono text-[clamp(2.5rem,4.5vw,4.5rem)] tracking-tight leading-none text-[var(--text-primary)]"
+            >
+              {featured.name}
+            </motion.h2>
+          </div>
 
           {/* Description */}
           <motion.p
