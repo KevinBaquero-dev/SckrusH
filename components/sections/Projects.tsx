@@ -40,7 +40,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
-      className="fixed inset-0 z-[9000] flex items-end md:items-center md:justify-center md:p-10"
+      className="fixed inset-0 z-[9000] flex items-center justify-center p-5 md:p-10"
       onClick={onClose}
     >
       {/* Backdrop */}
@@ -48,12 +48,12 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
 
       {/* ── Mobile: bottom-sheet ─────────────────────────────────── */}
       <motion.div
-        initial={{ y: '100%' }}
-        animate={{ y: 0 }}
-        exit={{ y: '100%' }}
-        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] as const }}
+        initial={{ opacity: 0, scale: 0.96 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.96 }}
+        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] as const }}
         onClick={e => { e.stopPropagation(); setTextVisible(v => !v) }}
-        className="relative w-full rounded-t-[var(--radius-lg)] overflow-hidden md:hidden"
+        className="relative w-full rounded-[var(--radius-lg)] overflow-hidden md:hidden"
         style={{ background: 'rgba(0,0,0,0.70)', backdropFilter: 'blur(16px)' }}
       >
         {/* Image 16:9 */}
