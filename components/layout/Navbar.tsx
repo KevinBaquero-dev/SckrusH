@@ -57,6 +57,7 @@ export default function Navbar() {
         style={{
           backgroundColor: scrolled || menuOpen ? 'rgba(8,8,8,0.95)' : 'transparent',
           backdropFilter:   scrolled || menuOpen ? 'blur(4px)' : 'none',
+          paddingTop: 'env(safe-area-inset-top)',
         }}
       >
         <Container>
@@ -123,8 +124,8 @@ export default function Navbar() {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="fixed inset-0 z-40 flex flex-col pt-[72px] md:hidden"
-            style={{ backgroundColor: 'rgba(8,8,8,0.97)' }}
+            className="fixed inset-0 z-40 flex flex-col md:hidden"
+            style={{ paddingTop: 'calc(env(safe-area-inset-top) + 72px)', backgroundColor: 'rgba(8,8,8,0.97)' }}
           >
             <Container>
               <motion.ul
