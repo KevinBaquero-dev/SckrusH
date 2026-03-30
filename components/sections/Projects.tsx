@@ -63,7 +63,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
             alt={project.name}
             fill
             sizes="(max-width: 768px) 100vw, 90vw"
-            className="object-cover object-top"
+            className="object-contain object-center md:object-cover md:object-top"
           />
         ) : (
           <div
