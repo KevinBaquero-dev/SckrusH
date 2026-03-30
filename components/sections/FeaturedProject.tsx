@@ -142,7 +142,7 @@ export default function FeaturedProject() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, amount: 0.15 }}
             transition={{ duration: 0.7, delay: 0.1, ease: 'easeOut' as const }}
-            className="relative w-[108%] py-16 lg:py-24"
+            className="relative w-full lg:w-[108%] py-12 lg:py-24"
           >
             {featured.image ? (
               <div

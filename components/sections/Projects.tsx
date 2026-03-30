@@ -32,35 +32,37 @@ const cardVariants = {
 // ─── Project modal ────────────────────────────────────────────────────────────
 
 function ProjectModal({ project, onClose }: { project: Project; onClose: () => void }) {
+  const [textVisible, setTextVisible] = useState(true)
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
-      className="fixed inset-0 z-[9000] flex items-center justify-center p-4 md:p-10"
+      className="fixed inset-0 z-[9000] md:flex md:items-center md:justify-center md:p-10"
       onClick={onClose}
     >
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/75 backdrop-blur-sm" />
 
-      {/* Panel */}
+      {/* Panel — full-screen on mobile, 16/9 centered on desktop */}
       <motion.div
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.96 }}
         transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] as const }}
-        onClick={e => e.stopPropagation()}
-        className="relative w-full max-w-5xl rounded-[var(--radius-lg)] overflow-hidden"
-        style={{ aspectRatio: '16/9' }}
+        onClick={e => { e.stopPropagation(); setTextVisible(v => !v) }}
+        className="absolute inset-0 md:relative md:inset-auto md:w-full md:max-w-5xl md:aspect-[16/9] md:rounded-[var(--radius-lg)] overflow-hidden"
       >
+
         {/* Image */}
         {project.image ? (
           <Image
             src={project.image}
             alt={project.name}
             fill
-            sizes="90vw"
+            sizes="(max-width: 768px) 100vw, 90vw"
             className="object-cover object-top"
           />
         ) : (
@@ -72,55 +74,73 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
           />
         )}
 
-        {/* Gradient overlay: black left → transparent right */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'linear-gradient(to right, rgba(0,0,0,0.93) 0%, rgba(0,0,0,0.80) 28%, rgba(0,0,0,0.35) 55%, transparent 78%)',
-          }}
-        />
-
-        {/* Content — left side */}
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-[52%] px-8 md:px-12 py-8 flex flex-col gap-4">
-            <p className="font-mono text-xs text-[var(--text-muted)]">{'> proyecto'}</p>
-
-            <h2
-              className="font-mono tracking-tight leading-none text-white"
-              style={{ fontSize: 'clamp(1.8rem, 3.5vw, 3rem)' }}
+        {/* Overlay + content — animated */}
+        <AnimatePresence>
+          {textVisible && (
+            <motion.div
+              key="text-overlay"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="absolute inset-0"
             >
-              {project.name}
-            </h2>
+              {/* Gradient bottom→top on mobile, left→right on desktop */}
+              <div
+                className="absolute inset-0 md:hidden"
+                style={{
+                  background: 'linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.65) 40%, rgba(0,0,0,0.15) 65%, transparent 85%)',
+                }}
+              />
+              <div
+                className="absolute inset-0 hidden md:block"
+                style={{
+                  background: 'linear-gradient(to right, rgba(0,0,0,0.93) 0%, rgba(0,0,0,0.80) 28%, rgba(0,0,0,0.35) 55%, transparent 78%)',
+                }}
+              />
 
-            <p className="font-sans text-sm leading-relaxed text-white/70 max-w-[38ch]">
-              {project.description}
-            </p>
+              {/* Content: bottom on mobile, left-center on desktop */}
+              <div className="absolute inset-0 flex items-end md:items-center">
+                <div className="w-full md:w-[52%] px-6 md:px-12 pb-12 md:py-8 flex flex-col gap-3 md:gap-4">
+                  <p className="font-mono text-xs text-white/40">{'> proyecto'}</p>
 
-            <div className="flex flex-wrap gap-1.5">
-              {project.stack.map(tech => (
-                <span
-                  key={tech}
-                  className="font-mono text-xs px-2.5 py-1 rounded-[var(--radius-sm)]"
-                  style={{
-                    border: '1px solid rgba(255,255,255,0.15)',
-                    background: 'rgba(255,255,255,0.07)',
-                    color: 'rgba(255,255,255,0.65)',
-                  }}
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
+                  <h2
+                    className="font-mono tracking-tight leading-none text-white"
+                    style={{ fontSize: 'clamp(1.6rem, 5vw, 3rem)' }}
+                  >
+                    {project.name}
+                  </h2>
 
-          </div>
-        </div>
+                  <p className="font-sans text-sm leading-relaxed text-white/70">
+                    {project.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.stack.map(tech => (
+                      <span
+                        key={tech}
+                        className="font-mono text-xs px-2.5 py-1 rounded-[var(--radius-sm)]"
+                        style={{
+                          border: '1px solid rgba(255,255,255,0.15)',
+                          background: 'rgba(255,255,255,0.07)',
+                          color: 'rgba(255,255,255,0.65)',
+                        }}
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Close button */}
         <button
-          onClick={onClose}
+          onClick={e => { e.stopPropagation(); onClose() }}
           aria-label="Cerrar"
-          className="absolute top-4 right-4 font-mono text-sm text-white/40 hover:text-white transition-colors duration-200 w-8 h-8 flex items-center justify-center"
+          className="absolute top-4 right-4 font-mono text-sm text-white/40 hover:text-white transition-colors duration-200 w-8 h-8 flex items-center justify-center z-10"
         >
           ✕
         </button>

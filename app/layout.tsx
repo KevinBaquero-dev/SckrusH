@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/config/site";
@@ -16,6 +16,11 @@ const geistMono = Geist_Mono({
 });
 
 const title = `${siteConfig.name} — Full Stack Developer`
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   title: {
@@ -37,10 +42,6 @@ export const metadata: Metadata = {
     description: siteConfig.description,
   },
   manifest: "/manifest.json",
-  icons: {
-    icon:  "/logo.png",
-    apple: "/logo.png",
-  },
 };
 
 export default function RootLayout({
