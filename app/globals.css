@@ -122,7 +122,7 @@
   position: fixed;
   inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-  opacity: 0.030;
+  opacity: 0.025;
   pointer-events: none;
   z-index: 9999;
 }
@@ -134,22 +134,6 @@
   50%       { opacity: 0; }
 }
 
-@keyframes orb-drift-1 {
-  0%, 100% { transform: translate(0,    0);       }
-  33%      { transform: translate(-70px, 55px);   }
-  66%      { transform: translate(45px, -65px);   }
-}
-
-@keyframes orb-drift-2 {
-  0%, 100% { transform: translate(0,    0);       }
-  33%      { transform: translate(75px, -45px);   }
-  66%      { transform: translate(-50px, 70px);   }
-}
-
-@keyframes orb-drift-3 {
-  0%, 100% { transform: translate(0,    0);       }
-  50%      { transform: translate(-45px, -55px);  }
-}
 
 /* ─── Utility classes ────────────────────────────────────────── */
 @layer utilities {
