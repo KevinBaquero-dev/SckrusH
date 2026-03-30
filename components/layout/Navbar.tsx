@@ -5,6 +5,9 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Container from '@/components/layout/Container'
 import { siteConfig } from '@/config/site'
 
+const LOGO_LABEL = `${siteConfig.name}`
+const LOGO_ALIAS = `(${siteConfig.alias})`
+
 const NAV_LINKS = [
   { label: 'About',      href: '#about'    },
   { label: 'Proyectos',  href: '#projects' },
@@ -62,9 +65,10 @@ export default function Navbar() {
             <a
               href="#hero"
               onClick={closeMenu}
-              className="font-mono text-sm text-[var(--text-primary)] hover:text-white transition-colors duration-200"
+              className="font-mono text-sm transition-colors duration-200 hover:opacity-100 opacity-90"
             >
-              {siteConfig.name}
+              <span className="text-[var(--text-primary)]">{LOGO_LABEL}</span>
+              <span className="text-[var(--text-muted)] ml-1.5">{LOGO_ALIAS}</span>
             </a>
 
             {/* Desktop links */}
@@ -152,7 +156,7 @@ export default function Navbar() {
                 variants={itemVariants}
                 className="font-mono text-xs text-[var(--text-muted)] pt-2"
               >
-                {'> ' + siteConfig.name + '_'}
+                {'> ' + siteConfig.alias + '_'}
               </motion.p>
             </Container>
           </motion.div>
