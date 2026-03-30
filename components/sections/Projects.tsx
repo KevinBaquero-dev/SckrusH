@@ -55,15 +55,15 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
         onClick={e => { e.stopPropagation(); setTextVisible(v => !v) }}
         className="relative w-full rounded-t-[var(--radius-lg)] overflow-hidden md:hidden"
       >
-        {/* Image at natural aspect ratio */}
-        <div className="relative w-full aspect-[4/3]">
+        {/* Image — contain so no zoom, dark bg hides letterbox bars */}
+        <div className="relative w-full aspect-[4/3] bg-[var(--surface-2)]">
           {project.image ? (
             <Image
               src={project.image}
               alt={project.name}
               fill
               sizes="100vw"
-              className="object-cover object-top"
+              className="object-contain object-center"
             />
           ) : (
             <div
@@ -344,15 +344,23 @@ function ProjectRow({
 export default function Projects() {
   const [selected, setSelected] = useState<Project | null>(null)
 
-  // ESC to close + body scroll lock
+  // ESC to close + body scroll lock (iOS-compatible)
   useEffect(() => {
     if (!selected) return
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setSelected(null) }
     document.addEventListener('keydown', onKey)
+    const scrollY = window.scrollY
     document.body.style.overflow = 'hidden'
+    document.body.style.position = 'fixed'
+    document.body.style.top = `-${scrollY}px`
+    document.body.style.width = '100%'
     return () => {
       document.removeEventListener('keydown', onKey)
       document.body.style.overflow = ''
+      document.body.style.position = ''
+      document.body.style.top = ''
+      document.body.style.width = ''
+      window.scrollTo(0, scrollY)
     }
   }, [selected])
 
