@@ -106,7 +106,7 @@ export default function Contact() {
 
           {/* CTA — email */}
           <motion.div variants={fadeVariants} className="mb-16">
-            <Magnetic>
+            <Magnetic strengthX={0.16}>
               <a
                 href={email}
                 className="group relative inline-block font-mono text-base text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200"

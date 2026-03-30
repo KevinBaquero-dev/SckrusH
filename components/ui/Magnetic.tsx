@@ -4,12 +4,13 @@ import { useRef } from 'react'
 import { motion, useSpring } from 'framer-motion'
 
 interface MagneticProps {
-  children: React.ReactNode
-  strength?: number  // multiplier of offset applied (0–1)
-  radius?: number    // px — activation zone around center
+  children:  React.ReactNode
+  strengthX?: number  // horizontal multiplier (0–1)
+  strengthY?: number  // vertical multiplier (0–1)
+  radius?:    number  // px — activation zone around center
 }
 
-export default function Magnetic({ children, strength = 0.32, radius = 80 }: MagneticProps) {
+export default function Magnetic({ children, strengthX = 0.32, strengthY = 0.32, radius = 80 }: MagneticProps) {
   const ref = useRef<HTMLDivElement>(null)
 
   const x = useSpring(0, { stiffness: 220, damping: 18, mass: 0.4 })
@@ -22,8 +23,8 @@ export default function Magnetic({ children, strength = 0.32, radius = 80 }: Mag
     const dy = e.clientY - (rect.top  + rect.height / 2)
 
     if (Math.sqrt(dx * dx + dy * dy) < radius) {
-      x.set(dx * strength)
-      y.set(dy * strength)
+      x.set(dx * strengthX)
+      y.set(dy * strengthY)
     }
   }
 
