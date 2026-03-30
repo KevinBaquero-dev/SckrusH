@@ -1,8 +1,8 @@
 export const siteConfig = {
   name: "SckrusH",
-  tagline: "I don't just write code. I engineer the experience.",
+  tagline: "No escribo código. Diseño la experiencia.",
   description:
-    "Full stack developer building interfaces that think before they speak.",
+    "Desarrollador Full Stack construyendo productos digitales desde cero.",
   url: "https://sckrush.dev",
   socials: {
     github: "https://github.com/KevinBaquero-dev",

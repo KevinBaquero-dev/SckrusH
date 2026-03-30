@@ -5,6 +5,7 @@ export type Project = {
   stack: string[];
   url?: string;
   repo?: string;
+  image?: string;
   accent: string;
   size: "large" | "small";
   featured?: boolean;

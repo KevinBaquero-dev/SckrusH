@@ -1,45 +1,49 @@
-# SckrusH — Personal Portfolio
+# SckrusH — Portfolio
 
-Personal portfolio and blog for the **SckrusH** developer brand.
+Portfolio personal de Kevin Baquero. Construido con Next.js, Tailwind CSS y Framer Motion.
 
 ## Stack
 
-- **Next.js 16** (App Router)
-- **TypeScript**
-- **Tailwind CSS v4**
-- **shadcn/ui**
-- **Framer Motion**
-- **Geist Sans + Geist Mono**
+| Tecnología    | Versión  | Rol                    |
+|---------------|----------|------------------------|
+| Next.js       | 16.2.1   | Framework (App Router) |
+| React         | 19.2.4   | UI                     |
+| TypeScript    | ^5       | Tipado                 |
+| Tailwind CSS  | ^4       | Estilos                |
+| Framer Motion | ^12      | Animaciones            |
+| Geist         | next/font| Tipografía             |
 
-## Getting Started
+## Desarrollo local
 
 ```bash
 npm install
 npm run dev
+# http://localhost:3011
 ```
 
-Open [http://localhost:3000](http://localhost:3000)
-
-## Structure
+## Estructura
 
 ```
-app/              # Next.js App Router pages and layout
+app/                    # App Router (layout, page, globals.css, favicon)
 components/
-  sections/       # Page sections (Hero, About, Projects, etc.)
-  layout/         # Navbar, Footer
-  ui/             # Reusable UI components
-  animations/     # Animation wrappers
+  layout/               # Navbar, Footer, Container
+  sections/             # Hero, About, FeaturedProject, Projects, Stack, Contact
 config/
-  site.ts         # Site metadata, socials, tagline
+  site.ts               # nombre, url, socials, tagline
 lib/
-  data/           # Projects and stack data
-hooks/            # Custom React hooks
+  data/
+    projects.ts         # datos de proyectos
+    stack.ts            # categorías del stack técnico
+hooks/
+  useTypewriter.ts      # efecto typewriter con jitter
 ```
 
-## Design
+## Contenido
 
-Dark theme portfolio with a **Terminal Aesthetic** concept.
-Accent color: `#E8FF47` (electric lime).
-Fonts: Geist Mono (headings) + Geist Sans (body).
+Para actualizar proyectos: `lib/data/projects.ts`
+Para actualizar el stack: `lib/data/stack.ts`
+Para actualizar socials/email/url: `config/site.ts`
 
-See `CLAUDE.md` for full design decisions, component specs, and development status.
+## Deploy
+
+Desplegado en Vercel. Dominio: [sckrush.com](https://sckrush.com)

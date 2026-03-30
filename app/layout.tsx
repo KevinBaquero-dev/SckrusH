@@ -15,18 +15,26 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
+const title = `${siteConfig.name} — Full Stack Developer`
+
 export const metadata: Metadata = {
   title: {
-    default: siteConfig.name,
+    default: title,
     template: `%s — ${siteConfig.name}`,
   },
   description: siteConfig.description,
   openGraph: {
-    title: siteConfig.name,
+    title,
     description: siteConfig.description,
     url: siteConfig.url,
     siteName: siteConfig.name,
     type: "website",
+    locale: "es_CO",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description: siteConfig.description,
   },
 };
 
@@ -35,7 +43,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
-      lang="en"
+      lang="es"
       className={`${geistSans.variable} ${geistMono.variable}`}
     >
       <body className="noise">

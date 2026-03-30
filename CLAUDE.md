@@ -61,16 +61,16 @@ El portfolio se siente como una interfaz siendo construida en tiempo real. No es
 ```
 > SckrusH_
 
-I don't just write code.
-I engineer the experience.
+No escribo código.
+Diseño la experiencia.
 ```
 
-Subtítulo opcional:
+Subtítulo:
 ```
-Building interfaces that think before they speak.
+Sistemas construidos con intención.
 ```
 
-CTA: `explore work ↓` — texto plano, sin botón, underline animado en hover
+CTA: `ver proyectos ↓` — texto plano, sin botón, underline animado en hover
 
 ### Regla del accent color
 
@@ -190,27 +190,28 @@ hooks/
 - [x] shadcn/ui configurado
 - [x] framer-motion instalado
 - [x] `globals.css` con tokens de diseño completos
-- [x] `layout.tsx` configurado con fuentes y metadata
+- [x] `layout.tsx` configurado con fuentes, metadata y Open Graph
 - [x] `config/site.ts` con datos del sitio
-- [x] `lib/data/projects.ts` y `stack.ts` con tipos y placeholders
-- [x] Todos los section components creados como placeholders
-- [x] `Navbar.tsx` y `Footer.tsx` como placeholders
-- [ ] Hero — siguiente paso
-- [ ] About
-- [ ] Featured Project
-- [ ] Projects
-- [ ] Stack
-- [ ] Contact
-- [ ] Navbar / Footer
-- [ ] Animaciones y micro-interacciones
-- [ ] Cursor custom
-- [ ] Deploy
+- [x] `lib/data/projects.ts` y `stack.ts` con tipos y datos
+- [x] `components/layout/Container.tsx` — wrapper de container-main
+- [x] `hooks/useTypewriter.ts` — typewriter con jitter y startDelay
+- [x] Hero — typewriter, cursor blink, tagline reveal, CTA
+- [x] About — layout asimétrico, activity grid, strengths, stats
+- [x] Featured Project — full-width, parallax, accent glow por proyecto
+- [x] Projects — layout editorial, cards grandes/pequeñas alternadas
+- [x] Stack — categorías por columna, AI Workflow como capa separada
+- [x] Contact — heading directo, CTA email, social links
+- [x] Navbar — transparente, blur en scroll, links con accent hover
+- [x] Footer — copyright dinámico, social links
+- [x] Favicon personalizado (`app/icon.svg`)
+- [x] `next/image` en todos los componentes con imágenes
+- [ ] Imágenes reales de proyectos (reemplazar placeholders)
+- [ ] Cursor custom `_` global
+- [ ] Mobile nav (hamburger)
+- [ ] Deploy en Vercel + dominio sckrush.com
 
 ## Siguiente paso
 
-Implementar la sección **Hero** completa:
-- Efecto typewriter `> SckrusH_`
-- Tagline con stagger
-- CTA `explore work ↓`
-- Fondo con gradiente radial
-- Sin animaciones de scroll aún (solo entrada)
+Conectar repo a Vercel y configurar dominio `sckrush.com` en Hostinger:
+- Agregar `A record: @ → 76.76.21.21`
+- Agregar `CNAME: www → cname.vercel-dns.com`

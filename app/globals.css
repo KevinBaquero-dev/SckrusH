@@ -127,6 +127,12 @@
   z-index: 9999;
 }
 
+/* ─── Keyframes ──────────────────────────────────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
 /* ─── Utility classes ────────────────────────────────────────── */
 @layer utilities {
   .container-main {
@@ -145,6 +151,41 @@
   @media (min-width: 1280px) {
     .container-main {
       padding-inline: 3rem;
+    }
+  }
+
+  /* Section vertical rhythm */
+  .section {
+    padding-block: 5rem;   /* 80px mobile */
+  }
+
+  @media (min-width: 768px) {
+    .section {
+      padding-block: 7rem; /* 112px tablet */
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .section {
+      padding-block: 8rem; /* 128px desktop */
+    }
+  }
+
+  /* Left padding that aligns with container-main's content edge */
+  .pl-container {
+    padding-left: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .pl-container {
+      padding-left: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .pl-container {
+      /* (viewport - max-width) / 2 + inner padding */
+      padding-left: max(3rem, calc((100vw - 1200px) / 2 + 3rem));
     }
   }
 
