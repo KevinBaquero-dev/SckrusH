@@ -124,7 +124,8 @@ El accent `#E8FF47` aparece **solo donde el usuario necesita orientación o hay 
 
 ### About
 - Layout asimétrico 60/40
-- Stats en una fila: `05+ años · 12 proyectos · Full Stack · Open Source`
+- Stats en una fila: `5 proyectos llevados a producción · Full Stack · Idea Developer` (el número = proyectos en `lib/data/projects.ts`)
+- Terminal: `whoami` / `uptime` → "Gerente de SH Studios"
 - Números grandes, texto pequeño debajo
 
 ### Featured Project
@@ -135,8 +136,22 @@ El accent `#E8FF47` aparece **solo donde el usuario necesita orientación o hay 
 ### Projects
 - Layout editorial asimétrico (no grid uniforme)
 - Cards grandes: imagen de fondo, descripción en hover
-- Cards pequeñas: nombre + stack + flecha, sin imagen
+- Cards pequeñas: imagen 16:9 + nombre + stack + flecha
 - Cada card tiene su propio `accent` color (definido en `lib/data/projects.ts`)
+- Click en una card abre un modal; si el proyecto tiene `url` muestra "ver sitio ↗"
+- **Regla:** solo se muestran los proyectos que existen hoy en `~/proyectos` del servidor. Nada de proyectos viejos (MiVida, Shadow, EduGestión e Inventario Jardín se quitaron a propósito)
+- Proyectos actuales (oct 2026): **Nexus** (destacado), CobraIA, Cardinal, La Oficina, SH One. Todos los repos son privados: no poner `repo`
+
+## Capturas de proyectos (cómo se hicieron)
+
+Imágenes en `public/*.jpg`, 1600×1000, fondo `#090909` + grid + glow del accent, con teléfonos o ventanas de escritorio. Se ven bien con recorte 16:10, 16:9 (object-top) y 4:3 (destacado).
+
+- **Nunca con datos de producción.** Cardinal tiene `.env` hacia Supabase de producción: se corrió contra un Postgres temporal en Docker (`postgres:17-alpine`) con datos inventados ("Perfumería Aurora"). La Oficina igual, con su `prisma/seed.ts` + ventas inventadas
+- Nexus: demo local de `~/proyectos/nexus-demo` (`npm run demo` en `nexus-video`, puerto 3100, usuario `valentina@demo.nexus`; ver README de nexus-video)
+- SH One: copia de `dev/sh-one-dev.db` con `SH_ONE_DB` apuntando a la copia y las variables de Telegram/VAPID vacías (para no enviar nada)
+- CobraIA: es un bot de Telegram, no hay UI web. La imagen es un chat recreado en HTML con los textos exactos del bot (`cobraia-core/src/modules/telegram/telegram.service.ts`) y datos ficticios. Si el usuario manda pantallazos reales, reemplazarla
+- Navegador: `~/.cache/ms-playwright/chromium_headless_shell-1243/.../chrome-headless-shell` con `LD_LIBRARY_PATH=~/.local/chromelibs/usr/lib/x86_64-linux-gnu` y `playwright-core` de `~/proyectos/nexus-video/node_modules`. Node está en `~/.nvm/versions/node/v24.21.0/bin` (no en el PATH por defecto)
+- El servidor no tiene fuentes del sistema (no existe `/etc/fonts`): usar un `FONTCONFIG_FILE` propio con Inter y Noto Color Emoji (descargadas de Google Fonts) o los emojis salen como cuadros
 
 ### Stack
 - Grid por categorías (Frontend, Backend, Tools, Design)
@@ -208,10 +223,16 @@ hooks/
 - [x] Imágenes reales de proyectos (capturas con datos de demo, nunca de producción)
 - [ ] Cursor custom `_` global
 - [ ] Mobile nav (hamburger)
-- [ ] Deploy en Vercel + dominio sckrush.com
+- [x] Deploy en Vercel + dominio sckrush.com (push a `master` despliega; `sckrush.com` redirige a `www.sckrush.com`)
 
-## Siguiente paso
+## Pendientes
 
-Conectar repo a Vercel y configurar dominio `sckrush.com` en Hostinger:
-- Agregar `A record: @ → 76.76.21.21`
-- Agregar `CNAME: www → cname.vercel-dns.com`
+- Cursor custom `_` global
+- Mobile nav (hamburger)
+- `config/site.ts` tiene `url: "https://sckrush.dev"` (se usa en el Open Graph de `app/layout.tsx`), pero el dominio real es `sckrush.com`. Confirmar con el usuario antes de cambiarlo
+- Captura de Nexus: el panel muestra `localhost:3100/t/...` (detalle menor, se puede repetir)
+- Fuera de este repo: en Cardinal móvil el contenido queda pegado a los bordes (`pl-safe`/`pr-safe` pisan el `px-4` del `<main>` en `app/(dashboard)/layout.tsx`)
+
+## Notas de despliegue
+
+- DNS en Hostinger ya apunta a Vercel (`@` → `216.198.79.1`, `www` → CNAME de Vercel, `nexus` → `cname.vercel-dns.com`). Si "no se actualiza", casi siempre es caché del navegador: probar `Ctrl+Shift+R` o incógnito. No hay service worker
