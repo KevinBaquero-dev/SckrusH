@@ -32,7 +32,7 @@ const TERMINAL_LINES: TLine[] = [
   { type: 'out', text: 'Full Stack Developer · Bogotá, CO' },
   { type: 'gap' },
   { type: 'cmd', text: 'uptime' },
-  { type: 'out', text: 'Gerente de CobraIA SaaS' },
+  { type: 'out', text: 'Gerente de SH Studios' },
   { type: 'gap' },
   { type: 'cmd', text: 'cat motto.txt' },
   { type: 'out', text: 'Solución a verdaderos problemas.' },
