@@ -3,7 +3,7 @@ export const siteConfig = {
   alias:       "SckrusH",
   tagline:     "Solución a verdaderos problemas. Ahorra tiempo con Software.",
   description: "Desarrollador Full Stack construyendo productos digitales desde cero.",
-  url:         "https://sckrush.dev",
+  url:         "https://www.sckrush.com",
   socials: {
     github:    "https://github.com/KevinBaquero-dev",
     whatsapp:  "https://wa.me/573004007205",

@@ -223,13 +223,13 @@ hooks/
 - [x] Imágenes reales de proyectos (capturas con datos de demo, nunca de producción)
 - [ ] Cursor custom `_` global
 - [ ] Mobile nav (hamburger)
-- [x] Deploy en Vercel + dominio sckrush.com (push a `master` despliega; `sckrush.com` redirige a `www.sckrush.com`)
+- [x] Deploy en Vercel + dominio sckrush.com (push a `master` despliega; `sckrush.com` redirige a `www.sckrush.com`, que es la URL canónica en `config/site.ts`)
 
 ## Pendientes
 
 - Cursor custom `_` global
 - Mobile nav (hamburger)
-- `config/site.ts` tiene `url: "https://sckrush.dev"` (se usa en el Open Graph de `app/layout.tsx`), pero el dominio real es `sckrush.com`. Confirmar con el usuario antes de cambiarlo
+- No hay imagen de Open Graph (`app/opengraph-image.*`): al compartir el link no sale vista previa con imagen
 - Captura de Nexus: el panel muestra `localhost:3100/t/...` (detalle menor, se puede repetir)
 - Fuera de este repo: en Cardinal móvil el contenido queda pegado a los bordes (`pl-safe`/`pr-safe` pisan el `px-4` del `<main>` en `app/(dashboard)/layout.tsx`)
 
