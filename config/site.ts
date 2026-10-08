@@ -9,7 +9,7 @@ export const siteConfig = {
     whatsapp:  "https://wa.me/573004007205",
     instagram: "https://instagram.com/shstudios.co/",
     facebook:  "https://facebook.com/SHStudios.col/",
-    tiktok:    "https://tiktok.com/@shstudios.col",
+    tiktok:    "https://tiktok.com/@shstudios.co",
     linkedin:  "",
     twitter:   "",
     email:     "mailto:shstudios.co@gmail.com",
