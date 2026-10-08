@@ -231,7 +231,6 @@ hooks/
 - Mobile nav (hamburger)
 - No hay imagen de Open Graph (`app/opengraph-image.*`): al compartir el link no sale vista previa con imagen
 - Captura de Nexus: el panel muestra `localhost:3100/t/...` (detalle menor, se puede repetir)
-- Fuera de este repo: en Cardinal móvil el contenido queda pegado a los bordes (`pl-safe`/`pr-safe` pisan el `px-4` del `<main>` en `app/(dashboard)/layout.tsx`)
 
 ## Notas de despliegue
 
