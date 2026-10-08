@@ -13,7 +13,7 @@ const STRENGTHS = [
 ]
 
 const STATS = [
-  { value: '6',              label: 'proyectos llevados\na producción',              accent: true  },
+  { value: '5',              label: 'proyectos llevados\na producción',              accent: true  },
   { value: 'Full Stack',     label: 'frontend · backend\n· DevOps',                 accent: false },
   { value: 'Idea Developer', label: 'Software a medida según\ntus necesidades',     accent: false },
 ]

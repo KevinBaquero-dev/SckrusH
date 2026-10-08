@@ -31,6 +31,8 @@ export const stackCategories: StackCategory[] = [
     label: 'Backend / Systems',
     items: [
       { name: 'Node.js',    descriptor: 'APIs y servicios'           },
+      { name: 'NestJS',     descriptor: 'backends modulares'         },
+      { name: 'Python',     descriptor: 'FastAPI y automatización'   },
       { name: 'PostgreSQL', descriptor: 'base de datos relacional'   },
       { name: 'Prisma',     descriptor: 'ORM y migraciones'          },
       { name: 'REST APIs',  descriptor: 'integración de servicios'   },

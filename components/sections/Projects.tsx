@@ -20,13 +20,29 @@ const rows: ProjectRow[] = Array.from({ length: rowCount }, (_, i) => ({
   small: smallProjects[i] ?? null,
 }))
 
-const SHOW_VIEW_ALL = displayProjects.length > 4
 
 // ─── Animation variants ───────────────────────────────────────────────────────
 
 const cardVariants = {
   hidden:  { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' as const } },
+}
+
+// ─── Project link ─────────────────────────────────────────────────────────────
+
+function ProjectLink({ url }: { url: string }) {
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={e => e.stopPropagation()}
+      className="group relative self-start font-mono text-xs text-white/60 hover:text-white transition-colors duration-200 pointer-events-auto"
+    >
+      ver sitio ↗
+      <span className="absolute -bottom-px left-0 h-px w-0 bg-white/60 transition-[width] duration-300 ease-out group-hover:w-full" />
+    </a>
+  )
 }
 
 // ─── Project modal ────────────────────────────────────────────────────────────
@@ -104,6 +120,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
                       </span>
                     ))}
                   </div>
+                  {project.url && <ProjectLink url={project.url} />}
                 </div>
               </motion.div>
             )}
@@ -176,6 +193,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
                       </span>
                     ))}
                   </div>
+                  {project.url && <ProjectLink url={project.url} />}
                 </div>
               </div>
             </motion.div>
@@ -365,22 +383,13 @@ export default function Projects() {
       <Container>
         {/* Header */}
         <motion.div
-          className="flex items-center justify-between mb-10"
+          className="mb-10"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.4 }}
         >
           <p className="font-mono text-sm text-[var(--text-muted)]">{'> proyectos'}</p>
-          {SHOW_VIEW_ALL && (
-            <a
-              href="#"
-              className="group relative font-mono text-xs text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition-colors duration-200"
-            >
-              ver todos →
-              <span className="absolute -bottom-px left-0 h-px w-0 bg-[var(--text-muted)] transition-[width] duration-300 ease-out group-hover:w-full" />
-            </a>
-          )}
         </motion.div>
 
         {/* Project rows */}

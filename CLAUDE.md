@@ -205,7 +205,7 @@ hooks/
 - [x] Footer — copyright dinámico, social links
 - [x] Favicon personalizado (`app/icon.svg`)
 - [x] `next/image` en todos los componentes con imágenes
-- [ ] Imágenes reales de proyectos (reemplazar placeholders)
+- [x] Imágenes reales de proyectos (capturas con datos de demo, nunca de producción)
 - [ ] Cursor custom `_` global
 - [ ] Mobile nav (hamburger)
 - [ ] Deploy en Vercel + dominio sckrush.com
